@@ -1,109 +1,46 @@
 <?php
 //Creando la clase de eventos importantes
-class Evento{
-    private $identificador;
-    private $nombre;
-    private $tituloevento;
-    private $fechaevento;
-    private $descripcionevento;
+class Evento {
+    public $titulo;
+    public $fecha;
+   
+    public $lugar;
+    public $descripcion;
 
-    //Crecion del constructor del evento
-    public function __construct($identificador, $nombre, $tituloevento, $fechaevento, $descripcionevento){
-        $this->identificador = $identificador;
-        $this->nombre = $nombre;
-        $this->tituloevento = $tituloevento;
-        $this->fechaevento = $fechaevento;
-        $this->descripcionevento = $descripcionevento;
+    public function __construct($titulo, $fecha, $lugar,$descripcion) {
+        $this->titulo = $titulo;
+        $this->fecha = $fecha;
+       
+        $this->lugar = $lugar;
+        $this->descripcion = $descripcion;
     }
+
    //Creacion del get de los elementos del evento
-    public function getIdentificador(){
-        return $this->identificador;
+    public function getTitulo(){
+        return $this->titulo;
     }
-    public function getNombre(){
-        return $this->nombre;
+    public function getFecha(){
+        return $this->fecha;
     }
-    public function getTituloevento(){
-        return $this->tituloevento;
+    public function getLugar(){
+        return $this->lugar;
     }
-    public function getFechaevento(){
-        return $this->fechaevento;
-    }
-    public function getdescripcionevento(){
-        return $this->descripcionevento;
-    }
-    public function autentificacionFecha($fechaevento){
-        return $this->fechaevento === $fechaevento;
+    public function getDescripcion(){
+        return $this->descripcion;
     }
 }
+define('SESION_EVENTOS', 'eventos');
+define('ARREGLO_EVENTOS', 'eventos');
 
-class ListaEventos {
-    private $eventos = [];
+session_start();
 
-    // Método para agregar un evento
-    public function agregarEvento($nombre,$tituloevento, $fechaevento) {
-        // Generar un ID único para el evento
-        $id = uniqid();
-
-        // Crear un nuevo objeto Evento con los valores proporcionados
-        $evento = new Evento($id, $nombre,$tituloevento, $fechaevento);
-
-        // Agregar el evento a la lista de eventos
-        array_push($this->eventos, $evento);
-
-        // Devolver el objeto Evento recién creado
-        return $evento;
-    }
-
-    // Método para modificar un evento existente
-    public function modificarEvento($id, $nombre, $fecha, $lugar) {
-        // Buscar el evento por su ID
-        $evento = $this->buscarEventoPorId($id);
-
-        // Actualizar el evento con los valores proporcionados
-        $evento->setNombre($nombre);
-        $evento->setFecha($fecha);
-        $evento->setLugar($lugar);
-
-        // Devolver el objeto Evento actualizado
-        return $evento;
-    }
-
-    // Método para eliminar un evento existente
-    public function eliminarEvento($id) {
-        // Buscar el evento por su ID
-        $index = $this->buscarEventoIndexPorId($id);
-
-        // Eliminar el evento de la lista de eventos
-        array_splice($this->eventos, $index, 1);
-
-        // Devolver verdadero
-        return true;
-    }
-
-    // Método para buscar un evento por su ID
-    public function buscarEventoPorId($id) {
-        foreach ($this->eventos as $evento) {
-            if ($evento->getId() == $id) {
-                return $evento;
-            }
-        }
-
-        return null;
-    }
-
-    // Método para buscar el índice de un evento por su ID
-    public function buscarEventoIndexPorId($id) {
-        foreach ($this->eventos as $index => $evento) {
-            if ($evento->getId() == $id) {
-                return $index;
-            }
-        }
-
-        return null;
-    }
+if (!isset($_SESSION[SESION_EVENTOS])) {
+    $_SESSION[SESION_EVENTOS] = array();
 }
 
-  
+if (!isset($_SESSION[SESION_EVENTOS][ARREGLO_EVENTOS])) {
+    $_SESSION[SESION_EVENTOS][ARREGLO_EVENTOS] = array();
+}
 
 
 //Creacion de instancias de los objetos evento
@@ -121,3 +58,4 @@ $evento9 = new Evento("3","Martin","Ir a la clinica","02-03-2023","Ir a traer a 
 
 $eventos = array($evento1,$evento2,$evento3,$evento4,$evento5,$evento6,$evento7,$evento8,$evento9);
 ?>
+
